@@ -3,6 +3,7 @@ const router = express.Router();
 const sequelize = require('../db');
 const User = sequelize.import('../models/user');
 
+const validateSession = require('../middleware/validate-sessions')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken');
 
@@ -21,7 +22,7 @@ router.post("/signup", (req, res) => {
     
       res.json({
         user: user,
-        message: "Welcome to why that picture?",
+        message: "Welcome to pixel art maker",
         sessionToken: token
       })
     },
@@ -54,5 +55,28 @@ router.post("/login",(req,res)=>{
   })
   err => res.status(501).send({error:'failed to process'})
 });
+
+// Profile get we will only display user and biobut this gets everything
+
+router.get('/', validateSession, (req, res) => {
+  User.findAll({ where: { id: req.user.id}})
+    .then(user => res.status(200).json(user))
+    .catch(err => res.status(500).json({ error: err}))
+});
+
+// you can update your profile currently you can update all of it
+router.put('/', validateSession, (req, res) => {
+  User.update(req.body.user, { where: { id: req.user.id},returning: true})
+    .then(user => res.status(200).json(user))
+    .catch(err => res.status(500).json({ error: err}))
+});
+
+//deletes users whole profile
+
+router.delete('/', validateSession, (req, res) => {
+  User.destroy({ where: { id: req.user.id},returning: true})
+    .then(user => res.status(200).json(user))
+    .catch(err => res.status(500).json({ error: err}))
+})
 
 module.exports = router;

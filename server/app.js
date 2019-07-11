@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 
 //routes
 app.use("/user", user);
-// app.use("/art", art);
+app.use("/art", art);
 // app.use("/comments", comments)
 
 //port its listening on 

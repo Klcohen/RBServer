@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         bio: {
             type:DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         }
 
     });
