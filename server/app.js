@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 //routes
 app.use("/user", user);
 app.use("/art", art);
-// app.use("/comments", comments)
+app.use("/comments", comments)
 
 //port its listening on 
 app.listen(process.env.PORT, function(){
