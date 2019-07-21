@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const validateSession = require('../middleware/validate-sessions')
 const Art = require('../db').import('../models/art');
-
+// Art.sync({force:true})
 //post create your art worry about how to get the img in there
 router.post("/", validateSession, (req, res) => {
     const artpost ={

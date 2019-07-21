@@ -1,8 +1,8 @@
 module.exports = (sequelize, DataTypes) => {
     const Art = sequelize.define('art', {
         image: {
-            type:DataTypes.STRING,
-            allowNull: false
+            type:DataTypes.JSONB,
+            allowNull: true
         },
         title: {
             type:DataTypes.STRING,
@@ -10,11 +10,11 @@ module.exports = (sequelize, DataTypes) => {
         },
         tags: {
             type:DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         owner: {
             type:DataTypes.INTEGER,
-            allowNull: false
+            allowNull: true
         }
     });
     return Art;

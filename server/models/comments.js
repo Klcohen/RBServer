@@ -6,15 +6,15 @@ module.exports = (sequelize, DataTypes) => {
         },
         username: {
             type:DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
         post: {
             type:DataTypes.INTEGER,
-            allowNull: false
+            allowNull: true
         },
         owner: {
             type:DataTypes.INTEGER,
-            allowNull: false
+            allowNull: true
         }
     });
     return Comments;
