@@ -11,14 +11,14 @@ router.get("/", (req, res) => {
 })
 
 //should pull from art but heres the spicy bit
-router.post("/", validateSession, (req, res) => {
-    const commentpost ={
-        comment: req.body.comment.comment,
+router.post("/:id", validateSession, (req, res) => {
+    const comments ={
+        comment: req.body.comments.comment,
         username: req.user.username,
-        post: req.art.id,
+        post: req.params.id,
         owner: req.user.id
     }
-    Comment.create(commentpost)
+    Comment.create(comments,{where: {post:req.params.id}})
        .then( comment => res.status(200).json(comment) )
        .catch( err => res.status(500).json( {error: err }) );
 })
@@ -26,7 +26,7 @@ router.post("/", validateSession, (req, res) => {
 
 
 router.get('/:id', validateSession, (req, res) => {
-   Comment.findAll({ where: { id: req.params.id }})
+   Comment.findAll({ where: { post: req.params.id }})
      .then(comments => res.status(200).json(comments))
      .catch(err => res.status(500).json({ error: err}))
  })
