@@ -17,7 +17,7 @@ router.post("/signup", (req, res) => {
   })
   .then(
     function createSuccess(user) {
-
+console.log(user.id)
       let token = jwt.sign({id: user.id}, process.env.JWT_SECRET, {expiresIn: 60*60*24});
     
       res.json({
@@ -58,23 +58,24 @@ router.post("/login",(req,res)=>{
 
 // Profile get we will only display user and biobut this gets everything
 
-router.get('/', validateSession, (req, res) => {
-  User.findAll({ where: { id: req.user.id}})
+router.get('/:id', validateSession, (req, res) => {
+  User.findOne({ where: {  id: req.params.id}})
     .then(user => res.status(200).json(user))
     .catch(err => res.status(500).json({ error: err}))
 });
 
 // you can update your profile currently you can update all of it
-router.put('/', validateSession, (req, res) => {
-  User.update(req.body.user, { where: { id: req.user.id},returning: true})
+router.put('/:id', validateSession, (req, res) => {
+  console.log(req.body)
+  User.update(req.body.user, { where: { id: req.params.id}})
     .then(user => res.status(200).json(user))
     .catch(err => res.status(500).json({ error: err}))
 });
 
 //deletes users whole profile
 
-router.delete('/', validateSession, (req, res) => {
-  User.destroy({ where: { id: req.user.id},returning: true})
+router.delete('/:id', validateSession, (req, res) => {
+  User.destroy({ where: {  id: req.params.id},returning: true})
     .then(user => res.status(200).json(user))
     .catch(err => res.status(500).json({ error: err}))
 })
