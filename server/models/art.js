@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         owner: {
             type:DataTypes.INTEGER,
-            allowNull: false
+            allowNull: true
         }
     });
     return Art;
