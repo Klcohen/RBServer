@@ -25,7 +25,7 @@ router.get("/mine", validateSession,  (req, res) => {
   });
 
   // art/feed  a feed of all art
-router.get("/feed", validateSession,  (req, res) => {
+router.get("/feed",  (req, res) => {
     Art.findAll()
         .then(art => res.status(200).json(art))
         .catch(err => res.status(500).json({error: err}))

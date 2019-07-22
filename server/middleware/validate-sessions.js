@@ -2,8 +2,9 @@ const jwt = require('jsonwebtoken');
 const User = require('../db').import('../models/user');
 
 const validateSession = (req,res,next) => {
+    if(req.method !== 'OPTIONS'){    
     const token = req.headers.authorization;
-    console.log(token)
+
     jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) =>{
         if(!err && decodedToken){
             console.log('decoded here',decodedToken);
@@ -18,7 +19,9 @@ const validateSession = (req,res,next) => {
             req.errors = err;
             return res.status(500).send('Not authorized')
         }
-    })
+    })} else {
+       return next()
+    }
 };
 
 module.exports = validateSession
